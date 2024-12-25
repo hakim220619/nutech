@@ -1,0 +1,202 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Page</title>
+</head>
+<style>
+    .onboardingin {
+        position: relative;
+        width: 430px;
+        height: 732px;
+        background: #F9F9F9;
+    }
+    
+    .frame {
+        position: absolute;
+        width: 430px;
+        height: 318px;
+        left: 0;
+        bottom: 0;
+        background: #FFFFFF;
+        border-radius: 60px 60px 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+    }
+    
+    .title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 24px;
+        color: #18837D;
+        text-align: center;
+    }
+    
+    .description {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #5F6368;
+        text-align: center;
+    }
+    
+    .slider-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+    }
+    
+    .active {
+        width: 24px;
+        height: 6px;
+        background: #18837D;
+        border-radius: 30px;
+    }
+    
+    .inactive {
+        width: 6px;
+        height: 6px;
+        background: #DFE0F3;
+        border-radius: 50%;
+    }
+    .next-btn {
+        width: 327px;
+        height: 48px;
+        background: #18837D;
+        color: white;
+        text-align: center;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        border: none;
+    }
+    
+    .skip-btn {
+        width: 327px;
+        height: 48px;
+        background: transparent;
+        color: green;
+        text-align: center;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        border: none;
+    }
+    
+    .onboarding-image {
+        width: 50%; 
+        max-width: 500px; 
+        margin: 20px auto; 
+        display: block; 
+    }
+
+    .login-container {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        width: 430px;
+        height: 732px;
+        background: #F9F9F9;
+    }
+
+    .google-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        width: 327px;
+        height: 48px;
+        background: #FFFFFF;
+        border: 1px solid #DFE0F3;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        color: #5F6368;
+        cursor: pointer;
+    }
+
+    .google-btn img {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+<body>
+    <div class="onboardingin">
+        <div class="image-container">
+            <img src="/assets/logo/logo.png" alt="Onboarding Image" class="onboarding-image">
+        </div>
+        <div class="frame">
+            <div class="title">Lorem ipsum dolor sit amet</div>
+            <div class="description">Atur manajemen kampanyemu dengan mudah</div>
+            <div class="slider-indicator">
+                <div class="active"></div>
+                <div class="inactive"></div>
+                <div class="inactive"></div>
+            </div>
+            <button class="next-btn" onclick="nextPage()">Next</button>
+            <button class="skip-btn">Skip</button>
+        </div>
+    </div>
+
+    <div class="login-container">
+        <img src="/assets/logo/logo.png" alt="Logo" class="onboarding-image">
+        <div class="title">Selamat datang di Aplikasi Were Chatting</div>
+        <a href="/auth/google" class="google-btn">
+            <img src="/assets/logo/google.png" alt="Google Icon">
+            Login with Google
+        </a>
+        
+    </div>
+
+    <script>
+        let currentPage = 1;
+
+        function nextPage() {
+            currentPage++;
+            if (currentPage > 3) {
+                document.querySelector('.onboardingin').style.display = 'none';
+                document.querySelector('.login-container').style.display = 'flex';
+                return;
+            }
+            updatePageContent();
+        }
+
+        function updatePageContent() {
+            const title = document.querySelector('.title');
+            const description = document.querySelector('.description');
+            const indicators = document.querySelectorAll('.slider-indicator .active, .slider-indicator .inactive');
+
+            if (currentPage === 1) {
+                title.textContent = 'Lorem ipsum dolor sit amet';
+                description.textContent = 'Atur manajemen kampanyemu dengan mudah';
+            } else if (currentPage === 2) {
+                title.textContent = 'Lorem ipsum dolor sit amet';
+                description.textContent = 'Dive into a world of blissful massage services tailored to your preferences';
+            } else if (currentPage === 3) {
+                title.textContent = 'Lorem ipsum dolor sit amet';
+                description.textContent = 'Nikmati layanan terbaik sesuai kebutuhanmu';
+            }
+
+            indicators.forEach((indicator, index) => {
+                if (index === currentPage - 1) {
+                    indicator.classList.add('active');
+                    indicator.classList.remove('inactive');
+                } else {
+                    indicator.classList.remove('active');
+                    indicator.classList.add('inactive');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #F9F9F9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+            /* To avoid content being hidden under the bottom menu */
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            color: #18837D;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: white;
+            margin: 10px;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .profile-section img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .profile-info {
+            font-size: 14px;
+        }
+
+        .profile-info h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #18837D;
+        }
+
+        .profile-info p {
+            margin: 0;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Tab Menu */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            margin: 10px;
+            padding: 10px 0;
+            border-radius: 12px;
+        }
+
+        .tabs button {
+            border: none;
+            background: none;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tabs button.active {
+            font-weight: 600;
+            color: #18837D;
+            border-bottom: 2px solid #18837D;
+        }
+
+        /* Chat List */
+        .chat-list {
+            margin: 10px;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            display: none;
+            /* Initially hide all chats */
+        }
+
+        .chat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .chat-item:last-child {
+            border-bottom: none;
+        }
+
+        .chat-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .chat-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .chat-info .details {
+            font-size: 14px;
+        }
+
+        .chat-info .details h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .chat-info .details p {
+            margin: 0;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Settings Section */
+        .settings-container {
+            display: none;
+            /* Hide settings initially */
+            margin: 10px;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .setting-item {
+            display: flex;
+        
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .logout-btn {
+            margin: 10px;
+            padding: 10px;
+            background: #18837D;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Bottom Navigation Menu */
+        /* Bottom Navigation Menu */
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .bottom-menu button {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            /* Stack icon and text vertically */
+            justify-content: center;
+            /* Center align content */
+            align-items: center;
+            /* Center align content */
+            gap: 5px;
+            /* Space between icon and text */
+            transition: color 0.3s, border-top 0.3s;
+            /* Smooth transition on hover and active state */
+            padding: 10px 20px;
+        }
+
+        .bottom-menu button i {
+            font-size: 18px;
+            /* Adjust the icon size */
+        }
+
+        .bottom-menu button.active {
+            color: #18837D;
+            font-weight: 600;
+            border-top: 2px solid #18837D;
+        }
+
+        .bottom-menu button:hover {
+            color: #18837D;
+        }
+
+        /* Full width logout button */
+        .full-width {
+            width: 100%;
+            margin-top: 290px; /* Optional, adjust spacing */
+            display: flex;
+            justify-content: center; /* Center the button */
+            align-items: center; /* Vertically center */
+        }
+        
+        /* Style for logout button to make it transparent with text only */
+        .logout-btn {
+            background: transparent;  /* Transparent background */
+            color: #18837D;            /* Text color */
+            border: none;              /* Remove default border */
+            font-size: 14px;
+            padding: 10px 0;           /* Vertical padding */
+            text-align: center;        /* Center text */
+            width: 100%;               /* Ensure it takes full width */
+            cursor: pointer;
+            font-weight: 600;          /* Make text bold */
+            transition: color 0.3s;    /* Smooth transition on hover */
+        }
+        
+        .logout-btn:hover {
+            color: #1a6f53;            /* Slightly darker text on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header (Dynamic Change) -->
+        <div class="header" id="header">
+            <h1>Chats</h1>
+
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section" onclick="window.location.href='/edit-profile';" style="cursor: pointer;">
+            <img src="/assets/users1.png" alt="Profile">
+            <div class="profile-info">
+                <h2>Nusatech</h2>
+                <p>nusatech@company.co.id</p>
+            </div>
+        </div>
+        
+
+        <!-- Tab Menu (Hidden on Settings) -->
+        <div class="tabs" id="tabs">
+            <button class="active" id="all-tab"><i class="fas fa-comment-dots"></i> All</button>
+            <button id="groups-tab"><i class="fas fa-users"></i> Groups</button>
+            <button id="unread-tab"><i class="fas fa-envelope-open-text"></i> Unread</button>
+        </div>
+
+        <!-- Chat Lists -->
+        <div class="chat-list" id="all-chats">
+            <div class="chat-item">
+                <div class="chat-info">
+                    <img src="/assets/users1.png" alt="User">
+                    <div class="details">
+                        <h3>Giffard Kennedy</h3>
+                        <p>giffardkennedy@gmail.com</p>
+                    </div>
+                </div>
+                <span>Yesterday</span>
+            </div>
+            <!-- More chat items here... -->
+        </div>
+
+        <div class="chat-list" id="groups-chats">
+            <div class="chat-item">
+                <div class="chat-info">
+                    <img src="/assets/users1.png" alt="Group">
+                    <div class="details">
+                        <h3>Tech Group</h3>
+                        <p>techgroup@company.co.id</p>
+                    </div>
+                </div>
+                <span>2 days ago</span>
+            </div>
+        </div>
+
+        <div class="chat-list" id="unread-chats">
+            <div class="chat-item">
+                <div class="chat-info">
+                    <img src="/assets/users1.png" alt="Unread">
+                    <div class="details">
+                        <h3>John Smith</h3>
+                        <p>johnsmith@gmail.com</p>
+                    </div>
+                </div>
+                <span>Today</span>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="settings-container">
+            <div class="setting-item" id="change-username" onclick="window.location.href='/change-username';">
+                <i class="fas fa-user-edit"></i>&nbsp;
+                <p>Change Username</p>
+            </div>
+            
+            <div class="setting-item" id="change-password" onclick="window.location.href='/password';">
+                <i class="fas fa-key"></i>&nbsp;
+                <p>Change Password</p>
+            </div>
+        
+            <!-- Logout Button with Icon -->
+            <button class="logout-btn full-width">
+               </i> Logout
+            </button>
+        </div>
+
+
+    </div>
+
+    <!-- Bottom Navigation Menu -->
+    <div class="bottom-menu">
+        <button id="chat-btn" class="active">
+            <i class="fas fa-comments"></i> Chats
+        </button>
+        <button id="settings-btn">
+            <i class="fas fa-cogs"></i> Settings
+        </button>
+    </div>
+
+
+    <!-- JavaScript for Navigation -->
+    <script>
+        // Switch between chat categories (All, Groups, Unread)
+        document.getElementById('all-tab').addEventListener('click', function () {
+            document.querySelector('.chat-list').style.display = 'block';
+            document.getElementById('all-chats').style.display = 'block';
+            document.getElementById('groups-chats').style.display = 'none';
+            document.getElementById('unread-chats').style.display = 'none';
+            document.getElementById('all-tab').classList.add('active');
+            document.getElementById('groups-tab').classList.remove('active');
+            document.getElementById('unread-tab').classList.remove('active');
+        });
+
+        document.getElementById('groups-tab').addEventListener('click', function () {
+            document.querySelector('.chat-list').style.display = 'block';
+            document.getElementById('all-chats').style.display = 'none';
+            document.getElementById('groups-chats').style.display = 'block';
+            document.getElementById('unread-chats').style.display = 'none';
+            document.getElementById('groups-tab').classList.add('active');
+            document.getElementById('all-tab').classList.remove('active');
+            document.getElementById('unread-tab').classList.remove('active');
+        });
+
+        document.getElementById('unread-tab').addEventListener('click', function () {
+            document.querySelector('.chat-list').style.display = 'block';
+            document.getElementById('all-chats').style.display = 'none';
+            document.getElementById('groups-chats').style.display = 'none';
+            document.getElementById('unread-chats').style.display = 'block';
+            document.getElementById('unread-tab').classList.add('active');
+            document.getElementById('all-tab').classList.remove('active');
+            document.getElementById('groups-tab').classList.remove('active');
+        });
+
+        // Bottom navigation to switch to chats or settings
+        document.getElementById('chat-btn').addEventListener('click', function () {
+            // Change header for chats
+            document.getElementById('header').innerHTML = '<h1>Chats</h1>';
+            // Show chat section, hide settings
+            document.querySelector('.chat-list').style.display = 'block';
+            document.querySelector('.settings-container').style.display = 'none';
+            document.getElementById('tabs').style.display = 'flex'; // Show tabs again
+            document.getElementById('chat-btn').classList.add('active');
+            document.getElementById('settings-btn').classList.remove('active');
+        });
+
+        document.getElementById('settings-btn').addEventListener('click', function () {
+            // Change header for settings
+            document.getElementById('header').innerHTML = '<h1>Settings</h1>';
+            // Show settings section, hide chat
+            document.querySelector('.chat-list').style.display = 'none';
+            document.querySelector('.settings-container').style.display = 'block';
+            document.getElementById('tabs').style.display = 'none'; // Hide tabs
+            document.getElementById('settings-btn').classList.add('active');
+            document.getElementById('chat-btn').classList.remove('active');
+        });
+
+        // Default view (All chats displayed)
+        document.querySelector('.settings-container').style.display = 'none';
+        document.getElementById('all-chats').style.display = 'block';
+    </script>
+</body>
+
+</html>

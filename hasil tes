@@ -1,0 +1,59 @@
+// NO 1
+function sortEvenOdd(input) {
+  // Pisahkan bilangan genap dan ganjil
+  const evenNumbers = input.filter(num => num % 2 === 0);
+  const oddNumbers = input.filter(num => num % 2 !== 0);
+
+  // Urutkan bilangan genap dan ganjil secara menaik
+  const sortedEven = evenNumbers.sort((a, b) => a - b);
+  const sortedOdd = oddNumbers.sort((a, b) => a - b);
+
+  // Gabungkan bilangan genap di depan dan bilangan ganjil di belakang
+  return [...sortedEven, ...sortedOdd];
+}
+
+const input = [5, 3, 8, 6, 1, 9, 2];
+const result = sortEvenOdd(input);
+
+console.log(result);
+[2, 6, 8, 1, 3, 5, 9]
+
+// NO 2
+function calculateAverageResponseTime(responseTimes) {
+  // Jumlahkan waktu respons dari semua log
+  const totalResponseTime = responseTimes.reduce((total, log) => total + log.time, 0);
+
+  // Hitung rata-rata dengan membagi total waktu dengan jumlah log
+  const averageResponseTime = totalResponseTime / responseTimes.length;
+
+  return averageResponseTime;
+}
+
+const responseTimes = [
+  { endpoint: '/api/v1/users', time: 120 },
+  { endpoint: '/api/v1/products', time: 80 },
+  { endpoint: '/api/v1/orders', time: 150 }
+];
+
+const averageTime = calculateAverageResponseTime(responseTimes);
+
+console.log(averageTime);
+116.66666666666667
+
+// NO 3
+const fetchUserData = () => new Promise((resolve) => {
+  setTimeout(() => resolve({ name: 'John Doe', age: 30 }), 2000);
+});
+
+async function getUserData() {
+  try {
+    // Menunggu hasil dari API palsu
+    const data = await fetchUserData();
+    console.log('User Data:', data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+getUserData();
+User Data: { name: 'John Doe', age: 30 }
